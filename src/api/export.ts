@@ -151,7 +151,7 @@ async function _export({
 			}, timeout);
 
 			const r = await Promise.race([
-				fetch(url.href, {
+				fetch(encodeURI(url.href), {
 					headers: { host: host_header || host },
 					redirect: 'manual'
 				}),
