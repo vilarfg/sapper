@@ -11,17 +11,18 @@ export default {
 			return `${src}/client.js`
 		},
 
-		output: (): OutputOptions => {
-			let dir = `${dest}/client`;
-			if (process.env.SAPPER_LEGACY_BUILD) dir += `/legacy`;
-
-			return {
-				dir,
+		output: (outputOptions?: OutputOptions): OutputOptions => {
+			const options: OutputOptions = {
 				entryFileNames: '[name].[hash].js',
 				chunkFileNames: '[name].[hash].js',
 				format: 'esm',
-				sourcemap
-			};
+				sourcemap,
+				...outputOptions
+			}
+			options.dir = `${dest}/${options.dir || 'client'}`
+			if (process.env.SAPPER_LEGACY_BUILD) options.dir += `/legacy`;
+
+			return options;
 		}
 	},
 
